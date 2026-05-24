@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>QR Code Generator || Aesthetic Programmer 🧑‍💻 </title>
+
+        <link rel="icon" type="image/jpeg" href="profile/profile.jpeg">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- SEO -->
+        <meta name="description"
+            content="Free QR Code Generator by Aesthetic Programmer. Paste a link, generate QR code instantly, and download it easily.">
+
+        <!-- Site name -->
+        <meta property="og:site_name" content="free-qr-code-generator-aesth-prog">
+
+        <!-- Open Graph / WhatsApp / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://free-qr-code-generator-aesth-prog.netlify.app/">
+        <meta property="og:title" content="QR Code Generator | Aesthetic Programmer">
+        <meta property="og:description"
+            content="Generate QR codes instantly from any link. Fast, free, and easy to download.">
+
+        <meta property="og:image"
+            content="https://free-qr-code-generator-aesth-prog.netlify.app/profile/Screenshot%202026-05-24%20at%202.40.25%20AM.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://free-qr-code-generator-aesth-prog.netlify.app/">
+        <meta name="twitter:title" content="QR Code Generator | Aesthetic Programmer">
+        <meta name="twitter:description"
+            content="Generate QR codes instantly from any link. Fast, free, and easy to download.">
+        <meta name="twitter:image"
+            content="https://free-qr-code-generator-aesth-prog.netlify.app/profile/Screenshot%202026-05-24%20at%202.40.25%20AM.png">
+    </head>
+
+</head>
+
+<body>
+    <h2>Aesthetic QR Code Generator</h2>
+    <input type="text" placeholder=" Paste your link here">
+    <div class="main-wrapper">
+        <div id="qrcode">QR Code Preview</div>
+
+    </div>
+    <p class="message"></p>
+    <button class="downloadButton">Download </button>
+    <button class="main-button">Generate QR Code</button>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        let qrCode = document.getElementById("qrcode");
+        const message = document.querySelector(".message");
+        const usersLink = document.querySelector("input");
+        const downloadButton = document.querySelector(".downloadButton")
+
+
+        const button = document.querySelector(".main-button");
+
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            const inputBox = document.querySelector("input");
+
+            let usersLink = inputBox.value.trim();
+            if (usersLink) {
+                generateQRCode(usersLink)
+                document.querySelector(".main-wrapper").style.backgroundColor = "white";
+                message.textContent = `QR code generated successfully ✅`;
+                message.style.color = "blue";
+                setTimeout(() => {
+                    message.textContent = "";
+                }, 6000);
+            }
+            else {
+                message.textContent = `Please paste your link to generate ⚠️`;
+                document.querySelector(".main-wrapper").style.background = "none";
+                message.style.color = "red";
+                qrCode.innerHTML = "";
+                qrCode.innerHTML = "QR Code Preview";
+
+                setTimeout(() => {
+                    message.textContent = "";
+                }, 3000);
+            }
+        });
+
+        downloadButton.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const qrDiv = document.getElementById("qrcode");
+            const canvas = qrDiv.querySelector("canvas");
+
+            if (!canvas) {
+                message.textContent = "Please generate a QR Code ⚠️ ";
+                return;
+            }
+
+
+            const finalCanvas = document.createElement("canvas");
+            const ctx = finalCanvas.getContext("2d");
+
+            const size = 400;
+
+            finalCanvas.width = size;
+            finalCanvas.height = size;
+
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, size, size);
+
+
+            ctx.strokeStyle = "#1e3a8a";
+            ctx.lineWidth = 10;
+            ctx.strokeRect(0, 0, size, size);
+
+
+            const qrSize = 300;
+            const x = (size - qrSize) / 2;
+            const y = (size - qrSize) / 2;
+
+            ctx.drawImage(canvas, x, y, qrSize, qrSize);
+
+
+            const link = document.createElement("a");
+            link.download = "aesthetics_programmer_QR Code .png";
+            link.href = finalCanvas.toDataURL("image/png");
+            link.click();
+
+
+        })
+
+        function generateQRCode(usersLink) {
+            qrCode.innerHTML = "";
+            new QRCode(qrCode, {
+                text: usersLink,
+                width: 300,
+                height: 300,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+        };
+    </script>
+
+</body>
+
+</html>
