@@ -12,7 +12,7 @@
             align-items: center;
             gap: 1em;
             flex-direction: column;
-            background: url(login-background-3.jpg);
+            background: url(/login-background-3.jpg);
             background-repeat: no-repeat;
             background-size: cover;
             color: rgb(0, 0, 0);
